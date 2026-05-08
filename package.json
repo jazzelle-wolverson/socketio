@@ -1,0 +1,25 @@
+{
+  "name": "socketio",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/jazzelle-wolverson/socketio#readme",
+  "bugs": {
+    "url": "https://github.com/jazzelle-wolverson/socketio/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jazzelle-wolverson/socketio.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "ejs": "^5.0.2",
+    "express": "^5.2.1",
+    "socket.io": "^4.8.3"
+  }
+}
