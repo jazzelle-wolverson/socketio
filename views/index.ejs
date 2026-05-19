@@ -4,13 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Socket.io</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
 </head>
 <body>
     <h1>Socket.io Application</h1>
-    <ul id="messages"></ul>
-    <form id="form" action="">
-        <input id="input" autocomplete="off" /><button>Send</button>
-    </form>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg">
+                <ul id="messages"></ul>
+                <form id="form" action="">
+                    <input id="input" autocomplete="off" />
+                    <button>Send</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg">
+                <form id="userNameForm">
+                    <input id="userName" autocomplete="off" />
+                    <button>Set Username</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>=
     <script src="/socket.io/socket.io.js"></script>
     <script>
         const socket = io();
@@ -26,7 +50,24 @@
                 input.value = '';
             }
         });
-        
+
+        socket.on('chat message', (data) => {
+            const item = document.createElement('li');
+            item.textContent = `${data.username} said ${data.message}`;
+            messages.appendChild(item);
+        });
+
+        let usernameForm = document.querySelector('#userNameForm');
+        usernameForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+            const inputName = document.querySelector('#userName');
+            const userName = inputName.value.trim();
+            if (userName != '') {
+                socket.emit('username', userName);
+                inputName.value = '';
+            }
+        })
+
     </script>
 </body>
 </html>
