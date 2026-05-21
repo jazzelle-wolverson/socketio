@@ -21,10 +21,31 @@ io.on('connection', (socket) => {
     console.log(`User connected: ${socket.id}`);
     socket.on('chat message', (data) => {
         console.log(`Message Received: ${data}`);
-        io.emit('chat message', {username: socket.username, message: data});
+        io.emit('chat message', {username: socket.username, message: data, textColor: socket.textColor});
     });
 
     socket.on("username", (data) => {
         socket.username = data;
-    })
+    });
+    
+    socket.on("createRoom", (data) => {
+        socket.currentRoom = data;
+        socket.join(data);
+        io.to(data).emit("roomCreated", {username: socket.username, room: data});
+    });
+
+    socket.on("messageRoom", (data) => {
+        io.to(socket.currentRoom).emit("roomMessaged", {username: socket.username, message: data});
+    });
+
+    socket.on("joinRoom", (data) => {
+        socket.currentRoom = data;
+        socket.join(data);
+        io.to(data).emit("userJoined", {username: socket.username, room: data});
+    });
+
+    socket.on("setColor", (data) => {
+        console.log(data);
+        socket.textColor = data;
+    });
 });
