@@ -24,6 +24,11 @@ io.on('connection', (socket) => {
         io.emit('chat message', {username: socket.username, message: data, textColor: socket.textColor});
     });
 
+    socket.on("setColor", (data) => {
+        console.log(data);
+        socket.textColor = data;
+    });
+
     socket.on("username", (data) => {
         socket.username = data;
     });
@@ -44,8 +49,5 @@ io.on('connection', (socket) => {
         io.to(data).emit("userJoined", {username: socket.username, room: data});
     });
 
-    socket.on("setColor", (data) => {
-        console.log(data);
-        socket.textColor = data;
-    });
+
 });
